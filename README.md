@@ -47,24 +47,24 @@ The CoLing project involves five academic institutions and two NGOs from four Eu
 
 ### 1. Online (GitHub Pages)
 
-Search the lexicon in your browser (viewer mode, no installation):
+Search the lexicon in your browser (viewer mode, no installation, no local storage):
 
-**→ [Open Punskas Lexicon](https://YOUR_USER.github.io/YOUR_REPO/)**
+**→ [Open Punskas Lexicon](https://colingua.github.io/punskas/)**
 
-> After enabling GitHub Pages, replace the link above with your site URL (Settings → Pages). If the `Punskas` folder is the repository root, use `https://YOUR_USER.github.io/YOUR_REPO/`; if it lives in a subfolder, use `…/Punskas/`.
+Published from the `main` branch: https://colingua.github.io/punskas/
 
 ### 2. Locally
 
 1. Download or clone the repository.
 2. Open `index.html` in a browser (double-click — no server needed).
-3. On first run in editor mode, confirm import of the bundled seed data.
-4. Mode: set `config.js` (`mode: 'editor'` | `'viewer'`) or use query parameters, e.g. `index.html?mode=viewer`.
+3. Default `config.js` is **viewer** (read-only, seed in memory only — no IndexedDB).
+4. For editing: set `config.js` to `mode: 'editor'`, or open `index.html?mode=editor`. On first editor run, confirm import of the bundled seed into IndexedDB.
 
 ### 3. Embed on your website
 
 ```html
 <iframe
-  src="https://YOUR_USER.github.io/YOUR_REPO/?mode=viewer&chrome=0"
+  src="https://colingua.github.io/punskas/?chrome=0"
   style="width:100%;height:800px;border:0"
   title="Punskas Lexicon"
 ></iframe>
@@ -89,19 +89,7 @@ The `chrome=0` parameter hides the page header so the iframe shows lexicon conte
 
 ## Modes
 
-### Editor (default `config.js`)
-
-1. Double-click `index.html`.
-2. On first run, confirm import of bundled seed into **IndexedDB**.
-3. Search, preview, create, edit, delete.
-4. **Data ▾** → **Export Data (JSON)** / **Import Data (JSON)** (same v1 format).
-5. **Help** (viewer) / **User Manual** (editor) — how the lexicon works.
-
-Changes stay in this browser (IndexedDB). Copy `index.html` + JS/CSS + exported JSON to another machine, then Import.
-
-### Viewer (read-only / embed)
-
-Option A — replace config:
+### Viewer (default `config.js` / GitHub Pages)
 
 ```js
 // config.js
@@ -112,21 +100,28 @@ window.PUNSKAS_CONFIG = {
 };
 ```
 
-Option B — query string (overrides config):
+- Loads `data.js` into memory only — does **not** open or write IndexedDB.
+- Editing controls are hidden.
+- Query overrides: `?chrome=0` (embed, content only), `?mode=editor` (force editor).
 
-- `index.html?mode=viewer`
-- `index.html?mode=viewer&chrome=0` — content only (iframe embed)
-- `index.html?mode=editor` — force editor
+If `config.js` is missing, the app also starts in **viewer** mode.
 
-If `config.js` is missing, the app starts in **viewer** mode.
+### Editor
 
-Viewer loads `data.js` into memory and does not write IndexedDB. Editing controls are hidden.
+Set `mode: 'editor'` in `config.js`, or open `index.html?mode=editor`.
+
+1. On first run, confirm import of bundled seed into **IndexedDB**.
+2. Search, preview, create, edit, delete.
+3. **Data ▾** → **Export Data (JSON)** / **Import Data (JSON)** (same v1 format).
+4. **User Manual** — how the lexicon works.
+
+Changes stay in this browser (IndexedDB). Copy `index.html` + JS/CSS + exported JSON to another machine, then Import.
 
 ### Embed example
 
 ```html
 <iframe
-  src="punskas/index.html?mode=viewer&chrome=0"
+  src="https://colingua.github.io/punskas/?chrome=0"
   style="width:100%;height:800px;border:0"
   title="Punskas Lexicon"
 ></iframe>
